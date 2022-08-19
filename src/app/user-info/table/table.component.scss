@@ -1,0 +1,26 @@
+table {
+    width: 100%;
+  }
+  
+  .mat-form-field {
+    font-size: 14px;
+    width: 100%;
+  }
+  
+  td, th {
+    width: 20%;
+  }
+  .container{
+    max-width: 75em;
+    margin: 0 auto;
+    padding-top: 3em;
+
+  }
+ 
+.mat-row:nth-child(even){
+    background-color: #ecedf3;
+}
+
+.mat-row:nth-child(odd){
+    background-color: 	#f8f9fc;
+}
