@@ -50,4 +50,17 @@ export class TableComponent implements AfterViewInit, OnInit {
       this.dataSource.paginator.firstPage();
     }
   }
+
+  deleteRow(id:number){
+    this.api.deleteRecord(id)
+    .subscribe({
+      next:(res) => {
+        alert("Record successfully deleted")
+        this.getAllData();
+      },
+      error:() =>{
+        alert("Error while deleting record")
+      }
+    })
+  }
 }

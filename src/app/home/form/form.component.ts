@@ -1,8 +1,9 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { FloatLabelType } from '@angular/material/form-field';
 import { Router } from '@angular/router';
+import { delay } from 'rxjs';
 import { ApiService } from 'src/app/services/api.service';
 
 @Component({
@@ -19,9 +20,9 @@ export class FormComponent implements OnInit {
   ngOnInit(): void {
 
     this.inputForm = this.formBuilder.group({
-      firstName: ['', Validators.required],
-      lastName: ['', Validators.required],
-      emailAddress: ['', Validators.required]
+      firstName: ['', [Validators.required, Validators.pattern("[a-zA-Z ]*")]],
+      lastName: ['', [Validators.required, Validators.pattern("[a-zA-Z ]*")]],
+      emailAddress: ['', [Validators.required, Validators.email]]
     })
   }
 
@@ -34,19 +35,19 @@ export class FormComponent implements OnInit {
     return this.floatLabelControl.value || 'auto';
   }
 
-  emailAddress = new FormControl('', [Validators.required, Validators.email]);
-
   getErrorMessage() {
-    if (this.emailAddress.hasError('required')) {
+    if (this.inputForm.controls['emailAddress'].hasError('required')) {
       return 'You must enter a value';
     }
 
-    return this.emailAddress.hasError('email') ? 'Not a valid email' : '';
+    return this.inputForm.controls['emailAddress'].hasError('email') ? 'Not a valid email' : '';
   }
 
   addData() {
-    if (this.inputForm.valid) {
-      this.api.postData(this.inputForm.value)
+    //this.checkEmail(this.inputForm.controls['emailAddress'].value);
+    //if (this.goodEmail) {
+      if(this.inputForm.valid){
+        this.api.postData(this.inputForm.value)
         .subscribe({
           next: (res) => {
             alert("Data added succesfully");
@@ -56,10 +57,27 @@ export class FormComponent implements OnInit {
             alert("Error adding data")
           }
         })
-    }
+      }
+    //}
   }
-  // checkEmail(email: string): boolean {
-  //   let emailExists: boolean = false;
-    
-  // }
+
+  // goodEmail!:boolean;
+  checkEmail(value:string){
+    this.api.getRecord(value)
+    .subscribe((res) =>{
+      delay(5000);
+      if(res.body['length'] === 0){
+        //console.log(res.body['length']);       
+        //this.goodEmail = true;
+        this.addData();
+      }
+      else{
+        alert('The entered email is already registered on our system');
+        //this.goodEmail = false;
+      }
+    })
+    //return this.goodEmail;
+  }
+
+
 }

@@ -1,32 +1,38 @@
+<mat-toolbar>
+  <button [disabled]="true" mat-fab color="warn" aria-label="Example icon button with a home icon">
+    <mat-icon>home</mat-icon>
+  </button>
+  <span>Concept 1</span>
+  <span class="example-spacer"></span>
+  <button mat-raised-button color="warn">Table</button>
+</mat-toolbar>
 <div class="container">
-    <h1>User Info</h1>
-    <form [formGroup]="inputForm">
-        <div class="example-container">
-            <mat-form-field appearance="fill" [floatLabel]="getFloatLabelValue()">
-                <mat-label>First Name</mat-label>
-                <input pattern="[a-zA-Z ]*" formControlName="firstName" matInput placeholder="Enter your first name">
-              </mat-form-field>
-        </div>
-        <pre></pre>
-        <div class="example-container">
-            <mat-form-field appearance="fill" [floatLabel]="getFloatLabelValue()">
-                <mat-label>Last Name</mat-label>
-                <input pattern="[a-zA-Z ]*" formControlName="lastName" matInput placeholder="Enter your last name">
-              </mat-form-field>
-        </div>
-        <pre></pre>
-        <div class="example-container">
-            <mat-form-field appearance="fill">
-              <mat-label>Email address</mat-label>
-              <input formControlName="emailAddress" matInput placeholder="pat@example.com">
-              <mat-error *ngIf="emailAddress.invalid">{{getErrorMessage()}}</mat-error>
-            </mat-form-field>
-          </div>
-         <pre></pre>
-         <div class="example-button-row">
-          <button mat-raised-button color="primary" (click)="addData()">Submit</button>
-        </div>
-        <!-- <button class="btn btn-formSubmit" type="submit">Submit</button> -->
-    </form>
+  <h1>User Info</h1>
+  <form [formGroup]="inputForm">
+    <div class="example-container">
+      <mat-form-field appearance="fill" [floatLabel]="getFloatLabelValue()">
+        <mat-label>First Name</mat-label>
+        <input pattern="[a-zA-Z ]*" formControlName="firstName" matInput placeholder="Enter your first name">
+      </mat-form-field>
+    </div>
+    <pre></pre>
+    <div class="example-container">
+      <mat-form-field appearance="fill" [floatLabel]="getFloatLabelValue()">
+        <mat-label>Last Name</mat-label>
+        <input pattern="[a-zA-Z ]*" formControlName="lastName" matInput placeholder="Enter your last name">
+      </mat-form-field>
+    </div>
+    <pre></pre>
+    <div class="example-container">
+      <mat-form-field appearance="fill">
+        <mat-label>Enter your email</mat-label>
+        <input matInput placeholder="pat@example.com" formControlName="emailAddress" required>
+        <mat-error *ngIf="inputForm.controls['emailAddress'].invalid">{{getErrorMessage()}}</mat-error>
+      </mat-form-field>
+    </div>
+    <pre></pre>
+    <div class="example-button-row">
+      <button mat-raised-button color="primary" (click)="checkEmail(inputForm.controls['emailAddress'].value)">Submit</button>
+    </div>
+  </form>
 </div>
-

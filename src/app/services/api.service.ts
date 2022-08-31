@@ -14,4 +14,12 @@ export class ApiService {
   getData(){
     return this.http.get<any>("http://localhost:3000/userList/")
   }
+
+  getRecord(email:string){
+    return this.http.get<any>("http://localhost:3000/userList?emailAddress="+email, {observe:'response'});
+  }
+
+  deleteRecord(id:number){
+    return this.http.delete("http://localhost:3000/userList/"+id);
+  }
 }
